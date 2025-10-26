@@ -1,0 +1,21 @@
+service: email-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1
+  environment:
+    SENDER_EMAIL: ${env:SENDER_EMAIL}
+    SENDER_PASSWORD: ${env:SENDER_PASSWORD}
+
+functions:
+  sendEmail:
+    handler: handler.sendEmail
+    events:
+      - http:
+          path: send-email
+          method: post
+          cors: true
+plugins:
+  - serverless-offline
+
