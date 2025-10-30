@@ -1,85 +1,95 @@
-# 📧 Serverless Email API
+🧾 README.md
+# 📧 Serverless Email API (Python)
 
-This is a **Serverless REST API** built using Node.js that can **send emails**.  
-It uses **Nodemailer** for sending emails and **Serverless Framework** for creating an HTTP endpoint.  
-The API can be run **locally** using `serverless-offline`.
-
----
-
-## 🛠 Features
-
-- Send emails to any receiver email address
-- Input parameters:
-  - `receiver_email`
-  - `subject`
-  - `body_text`
-- Error handling:
-  - Returns `400` if required fields are missing
-  - Returns `500` if sending fails
-- CORS enabled for testing with frontend or Postman
+This project implements a simple REST API using the **Serverless Framework** with **Python 3.9** runtime.  
+The API accepts a recipient email address, subject, and message body, and responds with a success message.  
+It is built and tested locally using the `serverless-offline` plugin — no AWS subscription or deployment is required.
 
 ---
 
-## 📁 Project Structure
+## 🚀 Features
+- REST API built using **Serverless Framework**
+- **POST /dev/send-email** endpoint
+- Accepts JSON body with:
+  ```json
+  {
+    "receiver_email": "test@example.com",
+    "subject": "Hello from Serverless",
+    "body_text": "This is a test email."
+  }
 
-email-api/
-├── handler.js # Main function code
-├── serverless.yml # Serverless configuration
-├── package.json # Node.js dependencies
-├── .env # Email credentials (do NOT upload)
-└── README.md # Project documentation
 
-yaml
-Copy code
 
----
+Validates input and handles errors gracefully
 
-## ⚙️ Setup
 
-1. Clone the repo or copy files to a folder.
-2. Install dependencies:
+Returns proper HTTP response codes
 
-```bash
+
+Includes mock email sending logic for offline testing (no AWS SES required)
+
+
+
+⚙️ Setup Instructions
+
+
+Install dependencies
 npm install
-Create a .env file in the root folder:
 
-ini
-Copy code
-SENDER_EMAIL=yourgmail@gmail.com
-SENDER_PASSWORD=your_app_password
-Replace with your Gmail and App Password.
-Do not upload .env to GitHub.
 
-Start the API locally:
 
-bash
-Copy code
+Activate Python virtual environment
+python -m venv venv
+venv\Scripts\activate   # For Windows
+
+
+
+Run Serverless locally
 npx serverless offline
-The API runs at: http://localhost:3000/send-email
 
-📬 How to Test
-Use Postman or curl:
 
-POST → http://localhost:3000/send-email
+
+Test using Postman
+
+
+Method: POST
+
+
+URL: http://localhost:3000/dev/send-email
+
 
 Body (JSON):
-
-json
-Copy code
 {
-  "receiver_email": "someone@example.com",
-  "subject": "Test Email",
-  "body_text": "Hello from Serverless API!"
+  "receiver_email": "test@example.com",
+  "subject": "Test Subject",
+  "body_text": "This is a test email."
 }
-Success Response:
 
-json
-Copy code
-{
-  "message": "Email sent successfully!"
-}
-Error Responses:
 
-Missing fields → 400
 
-Wrong credentials → 500
+Header:
+Content-Type: application/json
+
+
+
+
+
+
+🧠 Notes
+
+
+For real email sending, AWS SES integration can be enabled by setting:
+environment:
+  SOURCE_EMAIL: "your_verified_email@example.com"
+  AWS_REGION: "ap-south-1"
+
+
+
+In this mock version, the function only simulates sending email and returns a success message for offline testing.
+
+
+
+📄 Author
+Harshit Nishad
+Built as part of a Serverless Framework assignment using Python & AWS Lambda (offline mode).
+
